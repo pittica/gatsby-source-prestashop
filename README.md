@@ -32,8 +32,9 @@ module.exports = {
     {
       resolve: `@pittica/gatsby-source-prestashop`,
       options: {
-		url: SHOP_URL,
-		key: SHOP_KEY
+        url: SHOP_URL,
+        key: SHOP_KEY,
+        locale: LOCALE
       }
     },
   ],
