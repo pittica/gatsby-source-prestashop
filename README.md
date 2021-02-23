@@ -20,7 +20,7 @@ npm install @pittica/gatsby-source-prestashop
 
 ## Usage
 
-The plugin provides source from a PrestaShop site.
+The plugin provides source from a [PrestaShop](https://www.prestashop.com/) site.
 
 ## Configuration
 

@@ -1,40 +1,39 @@
+const { createFileNodeFromBuffer } = require(`gatsby-source-filesystem`);
+
 const prestashop = require(`./src/prestashop`);
 const webservice = require(`./src/client/webservice`);
 const pageParser = require(`./src/parser/page`);
 const productParser = require(`./src/parser/product`);
 
-let locale = null;
-
-exports.onPreBootstrap = async ({ reporter }, pluginOptions) => {
+exports.sourceNodes = async (
+	{ actions: { createNode }, reporter, createContentDigest, createNodeId },
+	pluginOptions
+) => {
 	if (pluginOptions.url && pluginOptions.key) {
 		const client = webservice.create(pluginOptions);
+		const languages = await prestashop.languages(client, { filters: { iso_code: pluginOptions.locale } });
 
-		if (pluginOptions.locale) {
-			const languages = await prestashop.languages(client, { filters: { iso_code: pluginOptions.locale } });
+		if (languages && languages.length > 0) {
+			client.defaults.params.language = languages[0].id;
 
-			if (languages && languages.length > 0) {
-				this.locale = languages[0].id;
-
-				reporter.info(`gatsby-source-prestashop: Loaded "${languages[0].name}" language.`);
-			}
+			reporter.info(`gatsby-source-prestashop: Loaded "${languages[0].name}" language.`);
 		}
-	}
-};
 
-exports.sourceNodes = async ({ actions: { createNode }, createContentDigest, createNodeId }, pluginOptions) => {
-	if (pluginOptions.url && pluginOptions.key) {
-		const client = webservice.create({ ...pluginOptions, ...{ language: this.locale } });
 		const products = await prestashop.products(client);
 		const pages = await prestashop.pages(client);
 
 		products.forEach((product) => {
-			const content = productParser.parse(product);
+			const content = productParser.parse(product, pluginOptions);
 
 			createNode({
 				...content,
 				id: createNodeId(`PrestashopProduct-${content.id}`),
 				parent: null,
 				children: [],
+				imageData: {
+					productId: product.id,
+					imageId: product.id_default_image
+				},
 				internal: {
 					type: `PrestashopProduct`,
 					content: JSON.stringify(content),
@@ -61,6 +60,29 @@ exports.sourceNodes = async ({ actions: { createNode }, createContentDigest, cre
 	}
 };
 
+exports.onCreateNode = async ({ node, actions: { createNode }, cache, createNodeId }, pluginOptions) => {
+	if (node.internal.type === 'PrestashopProduct' && node.imageData !== null) {
+		if (node.imageData.imageId) {
+			const client = webservice.create(pluginOptions);
+			const buffer = await prestashop.image(client, node.imageData);
+
+			if (buffer !== null) {
+				const fileNode = await createFileNodeFromBuffer({
+					buffer,
+					cache,
+					createNode,
+					createNodeId,
+					name: node.imageData.imageId
+				});
+
+				if (fileNode) {
+					node.image___NODE = fileNode.id;
+				}
+			}
+		}
+	}
+};
+
 exports.createSchemaCustomization = ({ actions }) => {
 	const { createTypes } = actions;
 
@@ -81,6 +103,8 @@ exports.createSchemaCustomization = ({ actions }) => {
       description: String
       manufacturerName: String
       manufacturerId: Int
+      link: String!
+      image: File @link(from: "image___NODE")
     }
   `);
 };
