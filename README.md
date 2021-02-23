@@ -5,6 +5,7 @@
 ![Release](https://img.shields.io/github/v/release/pittica/gatsby-source-prestashop)
 ![GitHub package.json dependency version (dev dep on branch)](https://img.shields.io/github/package-json/dependency-version/pittica/gatsby-source-prestashop/dev/gatsby)
 ![GitHub package.json dependency version (dev dep on branch)](https://img.shields.io/github/package-json/dependency-version/pittica/gatsby-source-prestashop/dev/react)
+[![npm](https://img.shields.io/npm/v/@pittica/gatsby-source-prestashop)](https://www.npmjs.com/package/@pittica/gatsby-source-prestashop)
 
 ## Description
 
