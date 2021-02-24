@@ -2,7 +2,7 @@
   "name": "@pittica/gatsby-source-prestashop",
   "private": false,
   "description": "PrestaShop source plugin for GatsbyJS.",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "author": {
     "name": "Lucio Benini",
     "email": "info@pittica.com",
