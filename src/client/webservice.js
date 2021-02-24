@@ -1,5 +1,7 @@
-const axios = require('axios');
-const link = require('../link');
+const axios = require(`axios`);
+const http = require(`http`);
+const https = require(`https`);
+const link = require(`../link`);
 
 exports.create = ({ url, key, language }) => {
   const params = {};
@@ -18,6 +20,8 @@ exports.create = ({ url, key, language }) => {
     auth: {
       username: key
     },
+    httpAgent: new http.Agent({ keepAlive: true }),
+    httpsAgent: new https.Agent({ keepAlive: true }),
     responseType: 'json',
     crossDomain: true
   });

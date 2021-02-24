@@ -35,12 +35,42 @@ module.exports = {
       options: {
         url: SHOP_URL,
         key: SHOP_KEY,
-        locale: LOCALE
+        locale: LOCALE,
+        images: true
       }
     },
   ],
 }
 ```
+### Options
+
+* #### url
+  Description: The URL of the PrestaShop installation.
+
+  Required: **YES**.
+
+  Type: **String**.
+* #### key
+  Description: The PrestaShop webservice key.
+
+  Required: **YES**.
+
+  Type: **String**.
+* #### locale
+  Description: The locale *iso_code* of the language.
+
+  Required: **NO**.
+
+  Type: **String**.
+* #### images
+  Description: A value indicating whether download images from products.
+
+  Required: **NO**.
+
+  Type: **Boolean**.
+
+  Default value: **true**
+
 
 ## Copyright
 

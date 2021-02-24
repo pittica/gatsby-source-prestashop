@@ -1,4 +1,6 @@
 const webservice = require('./client/webservice');
+const http = require(`http`);
+const https = require(`https`);
 
 exports.pages = (client, options) =>
   webservice.get(client, 'content_management_system', {
@@ -18,7 +20,11 @@ exports.languages = (client, options) => webservice.get(client, 'languages', opt
 exports.image = (client, { productId, imageId }) => {
   if (productId && imageId) {
     return client
-      .get(`/images/products/${productId}/${imageId}`, { responseType: 'arraybuffer' })
+      .get(`/images/products/${productId}/${imageId}`, {
+        responseType: 'arraybuffer',
+        httpAgent: new http.Agent({ rejectUnauthorized: false }),
+        httpsAgent: new https.Agent({ rejectUnauthorized: false })
+      })
       .then((response) => {
         if (response.status === 200) {
           const buffer = Buffer.from(response.data, 'binary');
