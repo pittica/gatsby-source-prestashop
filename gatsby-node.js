@@ -2,6 +2,7 @@ const { createFileNodeFromBuffer } = require(`gatsby-source-filesystem`);
 
 const prestashop = require(`./src/prestashop`);
 const webservice = require(`./src/client/webservice`);
+const link = require(`./src/link`);
 const pageParser = require(`./src/parser/page`);
 const productParser = require(`./src/parser/product`);
 
@@ -10,7 +11,19 @@ exports.pluginOptionsSchema = ({ Joi }) => {
     url: Joi.string().required().description(`The URL of the PrestaShop installation.`),
     key: Joi.string().required().description(`The PrestaShop webservice key.`),
     locale: Joi.string().description(`The locale "iso_code" of the language.`),
-    images: Joi.boolean().description(`A value indicating whether download images from products.`).default(true)
+    images: Joi.object({
+      download: Joi.boolean().description(`A value indicating whether download images from products.`).default(false),
+      format: Joi.object({
+        product: Joi.string().default('medium_default'),
+        category: Joi.string().default('category_default'),
+        manufacturer: Joi.string().default('manufacturer_default')
+      })
+        .description(`Image formats.`)
+        .default(),
+      extension: Joi.string().description(`Image extension.`).default('jpg')
+    })
+      .description(`Image settings.`)
+      .default()
   });
 };
 
@@ -41,7 +54,12 @@ exports.sourceNodes = async (
         children: [],
         imageData: {
           productId: product.id,
-          imageId: product.id_default_image
+          imageId: product.id_default_image,
+          link: link.image.product(pluginOptions.url, {
+            id: product.id_default_image,
+            format: pluginOptions.images.format.product,
+            extension: pluginOptions.images.extension.toLowerCase()
+          })
         },
         internal: {
           type: `PrestashopProduct`,
@@ -70,7 +88,7 @@ exports.sourceNodes = async (
 };
 
 exports.onCreateNode = async ({ node, actions: { createNode }, cache, createNodeId }, pluginOptions) => {
-  if (pluginOptions.images && node.internal.type === 'PrestashopProduct' && node.imageData !== null) {
+  if (pluginOptions.images.download && node.internal.type === 'PrestashopProduct' && node.imageData !== null) {
     if (node.imageData.imageId) {
       const client = webservice.create(pluginOptions);
       const buffer = await prestashop.image(client, node.imageData);

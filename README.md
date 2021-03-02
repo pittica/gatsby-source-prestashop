@@ -36,7 +36,15 @@ module.exports = {
         url: SHOP_URL,
         key: SHOP_KEY,
         locale: LOCALE,
-        images: true
+        images: {
+          download: false,
+          format: {
+            product: 'medium_default',
+            category: 'category_default',
+            manufacturer: 'manufacturer_default'
+          },
+          extension: 'jpg'
+        }
       }
     },
   ],
@@ -63,11 +71,11 @@ module.exports = {
 
   Type: **String**.
 * #### images
-  Description: A value indicating whether download images from products.
+  Description: Image settings.
 
   Required: **NO**.
 
-  Type: **Boolean**.
+  Type: **Object**.
 
   Default value: **true**
 

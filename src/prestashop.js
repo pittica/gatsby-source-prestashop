@@ -27,7 +27,7 @@ exports.image = (client, { productId, imageId }) => {
       })
       .then((response) => {
         if (response.status === 200) {
-          const buffer = Buffer.from(response.data, 'binary');
+          const buffer = Buffer.isBuffer(response.data) ? response.data : Buffer.from(response.data, 'binary');
 
           if (Buffer.isBuffer(buffer)) {
             return buffer;
