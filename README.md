@@ -77,7 +77,7 @@ module.exports = {
 
   Type: **Object**.
 
-  Default value: **true**
+  Default value: **true**.
 
 
 ## Copyright
