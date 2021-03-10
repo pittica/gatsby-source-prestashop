@@ -38,7 +38,7 @@ exports.sourceNodes = async (
     if (languages && languages.length > 0) {
       client.defaults.params.language = languages[0].id;
 
-      reporter.info(`[gatsby-source-prestashop] Loaded "${languages[0].name}" language.`);
+      reporter.success(`[gatsby-source-prestashop] Loaded "${languages[0].name}" language.`);
     }
 
     const products = await prestashop.products(client);
