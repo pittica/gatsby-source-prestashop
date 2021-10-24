@@ -3,9 +3,8 @@
 ![License](https://img.shields.io/github/license/pittica/gatsby-source-prestashop)
 ![Version](https://img.shields.io/github/package-json/v/pittica/gatsby-source-prestashop)
 ![Release](https://img.shields.io/github/v/release/pittica/gatsby-source-prestashop)
-![GitHub package.json dependency version (dev dep on branch)](https://img.shields.io/github/package-json/dependency-version/pittica/gatsby-source-prestashop/dev/gatsby)
-![GitHub package.json dependency version (dev dep on branch)](https://img.shields.io/github/package-json/dependency-version/pittica/gatsby-source-prestashop/dev/react)
-[![npm](https://img.shields.io/npm/v/@pittica/gatsby-source-prestashop)](https://www.npmjs.com/package/@pittica/gatsby-source-prestashop)
+![Gatsby Version](https://img.shields.io/npm/dependency-version/@pittica/gatsby-source-prestashop/peer/gatsby)
+![React Version](https://img.shields.io/github/package-json/dependency-version/pittica/gatsby-source-prestashop/react)
 
 ## Description
 
@@ -14,6 +13,7 @@
 ## Install
 
 [![npm](https://img.shields.io/npm/v/@pittica/gatsby-source-prestashop)](https://www.npmjs.com/package/@pittica/gatsby-source-prestashop)
+[![npm](https://img.shields.io/npm/dm/@pittica/gatsby-source-prestashop)](https://www.npmjs.com/package/@pittica/gatsby-source-prestashop)
 
 ```shell
 npm install @pittica/gatsby-source-prestashop
