@@ -8,7 +8,7 @@
 
 ## Description
 
-[PrestaShop](https://www.prestashop.com/) source plugin for [GatsbyJS](https://www.gatsbyjs.org/).
+[PrestaShop](https://www.prestashop-project.org/) source plugin for [GatsbyJS](https://www.gatsbyjs.org/).
 
 ## Install
 
@@ -21,7 +21,7 @@ npm install @pittica/gatsby-source-prestashop
 
 ## Usage
 
-The plugin provides source from a [PrestaShop](https://www.prestashop.com/) site.
+The plugin provides source from a [PrestaShop](https://www.prestashop-project.org/) site.
 
 ## Configuration
 
